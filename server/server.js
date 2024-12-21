@@ -3,6 +3,7 @@ import {auth} from "express-openid-connect";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser"; 
 import cors from "cors";
+import  connect from "./db/connect.js";
 dotenv.config();
 
 const app = express();
@@ -29,8 +30,10 @@ app.use(cookieParser());
 app.use(auth(config));
 
 
+
 const server= async() =>{
     try {
+        await connect();
         app.listen(process.env.PORT,() =>{
             console.log(`server is running on port ${process.env.PORT}`);
         });
